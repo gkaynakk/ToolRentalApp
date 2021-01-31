@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
+//custom imports
+import 'package:avadanlik/components/HorizantalListView.dart';
+
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -105,7 +108,16 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: new ListView(
-        children: <Widget>[image_carousel],
+        children: <Widget>[
+          //image carousel starts here
+          image_carousel,
+          new Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: new Text('Kategoriler'),
+            //Horizantal list view starts here
+          ),
+          HorizantalList(),
+        ],
       ),
     );
   }

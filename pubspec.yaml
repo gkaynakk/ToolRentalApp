@@ -56,6 +56,22 @@ flutter:
       - images/r4.jpg
       - images/r5.jpg
       - images/r6.jpg
+      - images/categories/akülü vidalamalar.png
+      - images/categories/basınçlı yıkama makineleri.png
+      - images/categories/boya tabancası ve karıştırıcılar.png
+      - images/categories/çim biçme makinesi.png
+      - images/categories/inşaat makineleri.png
+      - images/categories/kaynak makineleri.png
+      - images/categories/kırıcılar ve deliciler.png
+      - images/categories/matkaplar.png
+      - images/categories/mekanik el aletleri.png
+      - images/categories/merdivenler.png
+      - images/categories/ölçü aletleri.png
+      - images/categories/takım çantaları.png
+      - images/categories/taşlamalar.png
+      - images/categories/testereler.png
+      - images/categories/zımpara ve polisaj.png
+      
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
