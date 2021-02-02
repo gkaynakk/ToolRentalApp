@@ -3,6 +3,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 
 //custom imports
 import 'package:avadanlik/components/HorizantalListView.dart';
+import 'package:avadanlik/components/products.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         ],
         autoplay: true,
         dotSize: 4.0,
-        indicatorBgPadding: 8.0,
+        indicatorBgPadding: 4.0,
         animationCurve: Curves.fastOutSlowIn,
         animationDuration: Duration(milliseconds: 1000),
       ),
@@ -111,12 +112,23 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           //image carousel starts here
           image_carousel,
+          //Padding Widget
           new Padding(
             padding: const EdgeInsets.all(2.0),
             child: new Text('Kategoriler'),
             //Horizantal list view starts here
           ),
           HorizantalList(),
+          //Padding widget
+          new Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: new Text('Yeni Gelen Ürünler'),
+          ),
+          //Grid View
+          Container(
+            height: 200.0,
+            child: Products(),
+          ),
         ],
       ),
     );

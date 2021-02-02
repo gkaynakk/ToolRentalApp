@@ -71,7 +71,10 @@ flutter:
       - images/categories/taşlamalar.png
       - images/categories/testereler.png
       - images/categories/zımpara ve polisaj.png
-      
+      - images/products/Alpina Benzinli Çim Biçme Makinesi.jpg
+      - images/products/Atlas Yarı Akülü İstif Makineleri Ayarlanabilir Çatallı ATFL10B25.jpg
+      - images/products/Teknisyen Takım Çantası.jpg
+      - images/products/Stanley Su Terazisi Pro 180 100 cm.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
