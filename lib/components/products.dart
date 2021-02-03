@@ -1,3 +1,4 @@
+import 'package:avadanlik/pages/productDetails.dart';
 import 'package:flutter/material.dart';
 
 class Products extends StatefulWidget {
@@ -60,7 +61,14 @@ class SingleProd extends StatelessWidget {
           tag: prodName,
           child: Material(
             child: InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  //here we are passing the values of the product to the product details page
+                  builder: (context) => new ProductDetails(
+                        productDetailName: prodName,
+                        productDetailRentPrice: prodRentPrice,
+                        productDetailPrice: prodPrice,
+                        productDetailPicture: prodPicture,
+                      ))),
               child: GridTile(
                   footer: Container(
                     height: 70,
