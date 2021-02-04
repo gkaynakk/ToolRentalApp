@@ -79,7 +79,25 @@ class _ProductDetailsState extends State<ProductDetails> {
               // ======== the brand button =====
               Expanded(
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return new AlertDialog(
+                            title: new Text("Adet"),
+                            content: new Text("Adet belirleyin"),
+                            actions: <Widget>[
+                              new MaterialButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(context);
+                                },
+                                child: new Text("close",
+                                    style: TextStyle(color: Colors.blue)),
+                              )
+                            ],
+                          );
+                        });
+                  },
                   color: Colors.white,
                   textColor: Colors.grey,
                   elevation: 1,
@@ -96,7 +114,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
           Row(
             children: <Widget>[
-              // ======== the brand button =====
+              // ======== the rent button =====
               Expanded(
                 child: MaterialButton(
                     onPressed: () {},
@@ -114,6 +132,58 @@ class _ProductDetailsState extends State<ProductDetails> {
                   onPressed: () {}),
             ],
           ),
+          Divider(),
+          new ListTile(
+            title: new Text("Ürün Detayı"),
+            subtitle: new Text(
+                "Teknisyen Takım Çantası, teknik ve hobby amaçlı kullanıma uygun sağlam ve dayanıklı bir üründür. "),
+          ),
+          Divider(),
+          new Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+                child: new Text(
+                  "Ürün İsmi",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: new Text(widget.productDetailName),
+              )
+            ],
+          ),
+          new Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+                child: new Text(
+                  "Ürün Markası",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: new Text("Alpina"),
+              )
+            ],
+          ),
+          new Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+                child: new Text(
+                  "Ürün Durumu",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: new Text("Yeni"),
+              )
+            ],
+          )
         ],
       ),
     );
