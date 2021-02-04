@@ -1,3 +1,4 @@
+import 'package:avadanlik/components/products.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -144,14 +145,14 @@ class _ProductDetailsState extends State<ProductDetails> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
                 child: new Text(
-                  "Ürün İsmi",
+                  "Malzeme",
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.all(5.0),
                 child: new Text(widget.productDetailName),
-              )
+              ),
             ],
           ),
           new Row(
