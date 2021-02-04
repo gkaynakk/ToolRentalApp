@@ -6,12 +6,16 @@ class ProductDetails extends StatefulWidget {
   final productDetailRentPrice;
   final productDetailPrice;
   final productDetailPicture;
+  final productDetailSpecs;
+  final productDetailBrand;
 
   ProductDetails(
       {this.productDetailName,
       this.productDetailRentPrice,
       this.productDetailPrice,
-      this.productDetailPicture});
+      this.productDetailPicture,
+      this.productDetailSpecs,
+      this.productDetailBrand});
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -92,7 +96,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 onPressed: () {
                                   Navigator.of(context).pop(context);
                                 },
-                                child: new Text("close",
+                                child: new Text("Kapat",
                                     style: TextStyle(color: Colors.blue)),
                               )
                             ],
@@ -136,8 +140,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           Divider(),
           new ListTile(
             title: new Text("Ürün Detayı"),
-            subtitle: new Text(
-                "Teknisyen Takım Çantası, teknik ve hobby amaçlı kullanıma uygun sağlam ve dayanıklı bir üründür. "),
+            subtitle: new Text(widget.productDetailSpecs),
           ),
           Divider(),
           new Row(
@@ -145,7 +148,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
                 child: new Text(
-                  "Malzeme",
+                  "Ürün Adı:",
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
@@ -160,13 +163,13 @@ class _ProductDetailsState extends State<ProductDetails> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
                 child: new Text(
-                  "Ürün Markası",
+                  "Ürün Markası:",
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.all(5.0),
-                child: new Text("Alpina"),
+                child: new Text(widget.productDetailBrand),
               )
             ],
           ),
@@ -175,7 +178,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
                 child: new Text(
-                  "Ürün Durumu",
+                  "Ürün Durumu:",
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
