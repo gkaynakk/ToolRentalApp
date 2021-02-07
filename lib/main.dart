@@ -4,6 +4,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 //custom imports
 import 'package:avadanlik/components/HorizantalListView.dart';
 import 'package:avadanlik/components/products.dart';
+import 'package:avadanlik/pages/cart.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -50,7 +51,10 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.search, color: Colors.white), onPressed: () {}),
           new IconButton(
               icon: Icon(Icons.shopping_cart, color: Colors.white),
-              onPressed: () {})
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => new Cart()));
+              })
         ],
       ),
       drawer: new Drawer(
@@ -86,7 +90,10 @@ class _HomePageState extends State<HomePage> {
                     title: Text('Kiraladıklarım'),
                     leading: Icon(Icons.shopping_basket, color: Colors.grey))),
             InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => new Cart()));
+                },
                 child: ListTile(
                     title: Text('Sepetim'),
                     leading: Icon(Icons.shopping_cart, color: Colors.grey))),

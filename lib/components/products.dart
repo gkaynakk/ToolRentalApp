@@ -108,7 +108,8 @@ class SingleProd extends StatelessWidget {
     return Card(
       //Hero widget is for transition between images
       child: Hero(
-          tag: prodName,
+          tag:
+              prodName, //Tag name should be changed if you are going to insert the same product
           child: Material(
             child: InkWell(
               onTap: () => Navigator.of(context).push(new MaterialPageRoute(
