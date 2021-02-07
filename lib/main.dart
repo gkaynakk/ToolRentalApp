@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
         autoplay: true,
         dotSize: 4.0,
         indicatorBgPadding: 4.0,
+        dotBgColor: Colors.transparent,
         animationCurve: Curves.fastOutSlowIn,
         animationDuration: Duration(milliseconds: 1000),
       ),
@@ -87,8 +88,8 @@ class _HomePageState extends State<HomePage> {
             InkWell(
                 onTap: () {},
                 child: ListTile(
-                    title: Text('Kategoriler'),
-                    leading: Icon(Icons.category, color: Colors.grey))),
+                    title: Text('Sepetim'),
+                    leading: Icon(Icons.shopping_cart, color: Colors.grey))),
             InkWell(
                 onTap: () {},
                 child: ListTile(

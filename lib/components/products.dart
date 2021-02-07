@@ -28,6 +28,44 @@ class _ProductsState extends State<Products> {
       "product_specs":
           "Teknisyen Takım Çantası, teknik ve hobby amaçlı kullanıma uygun sağlam ve dayanıklı bir üründür. \n\n-Malzeme: Sağlam dayanımı yüksek copolimer hammadde\n-Yükseklik: 18 cm\n-Genişlik: 48 cm\n-Derinlik: 	39,8 cm"
     },
+    {
+      "name": "Alüminyum Merdiven",
+      "picture": "images/products/Saraylı Alüminyum Merdiven 6+1 Basamak.jpg",
+      "product_brand": "Saraylı",
+      "price": 579.90,
+      "rent_price": 5.79,
+      "product_specs":
+          "Saraylı Alüminyum Merdiven, güçlendirilmiş ayak desteği ile ev ve işyerlerinde kullanıma uygun ihtiyaçlarınızı karşılayacak ideal bir üründür. \n\n-Tipi: A Tipi\n-Basamak Sayısı: 7 Basamaklı\n-Açık Ölçü: 148x120 cm\n-Kapalı Ölçü: 	223x51x10 cm"
+    },
+    {
+      "name": "Kaynak Makinesi",
+      "picture":
+          "images/products/KL PRO İnverter Kaynak Makinesi 200A KLMMA200.jpg",
+      "product_brand": "KL-PRO",
+      "price": 1749.90,
+      "rent_price": 17.49,
+      "product_specs":
+          "KL PRo Inverter Kaynak Makinesi 200A KLMMA200, 8,0 kVA gücü ile yüksek performans vadeder. Ürünün giriş gücü 230 volt olup, boşta çalışma voltajı ise 75 volttur. \n\n-Güç: 8,0 kVA\n-Giriş Gücü: 230 Volt\n-Çalışma Verimliliği: 200A 60%\n-Boşta Çalışma Voltajı: 	75 Volt"
+    },
+    {
+      "name": "Basınçlı Yıkama Makinesi ",
+      "picture":
+          "images/products/Black&Decker BXPW1500E Basınçlı Yıkama Makinesi.jpg",
+      "product_brand": "Black&Decker",
+      "price": 849.90,
+      "rent_price": 8.49,
+      "product_specs":
+          "Black&Decker BXPW1500E Basınçlı Yıkama Makinesi, yüksek basınçla sıkıştırılan suyun dar bir hortum ağzından püskürtmesi ile çeşitli alet ve araçların temizlenmesini sağlar. \n\n-Güç: 1500 Watt\n-Basınçlı Yıkama Debisi: 120 Bar\n-Buhar Basıncı: 120 Bar\n-Hortum Uzunluğu: 	6 Metre"
+    },
+    {
+      "name": "Dekupaj Testere",
+      "picture": "images/products/Bosch Dekupaj Testere 710W GST8000E.jpg",
+      "product_brand": "Bosch",
+      "price": 799.99,
+      "rent_price": 7.9,
+      "product_specs":
+          "Bosch Dekupaj Testere 710W GST8000E, profesyonel kullanıma yönelik tasarlanmış Bosch Dekupaj Testere, sağlam çelik taban levhası ile fark yaratır. Yüksüz hızı 500-3100 dev/dk'dır. \n\n-Güç: 710 Watt\n-Yüksüz Hızı dev/dk: 	500-3100 dev/dk\n-Kesme Derinliği Ahşap: 	80 mm\n-Kesme Derinliği Çelik: 	10 mm"
+    }
   ];
   @override
   Widget build(BuildContext context) {
@@ -85,30 +123,23 @@ class SingleProd extends StatelessWidget {
                       ))),
               child: GridTile(
                   footer: Container(
-                    height: 70,
-                    color: Colors.white70,
-                    child: ListTile(
-                      leading: Text(
-                        prodName,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      title: Text(
-                        "\₺$prodRentPrice",
-                        style: TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.w800),
-                      ),
-                      subtitle: Text(
-                        "\₺$prodPrice",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w800,
-                          decoration: TextDecoration.lineThrough,
-                          decorationColor: Colors.black,
-                          decorationThickness: 1.2,
-                        ),
-                      ),
-                    ),
-                  ),
+                      color: Colors.white70,
+                      child: new Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              prodName,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          ),
+                          new Text(
+                            "\₺${prodRentPrice}",
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      )),
                   child: Image.asset(
                     prodPicture,
                     fit: BoxFit.cover,
