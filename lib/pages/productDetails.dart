@@ -73,7 +73,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       "\₺${widget.productDetailRentPrice}",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.red))),
+                                  color: Colors.green[600]))),
                     ],
                   ),
                 ),
@@ -112,6 +112,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Row(
                     children: <Widget>[
                       Expanded(child: new Text("Adet")),
+                      Expanded(child: new Icon(Icons.arrow_drop_down)),
+                      Expanded(child: new Text("Gün")),
                       Expanded(child: new Icon(Icons.arrow_drop_down)),
                     ],
                   ),
@@ -315,7 +317,8 @@ class SimilarSingleProd extends StatelessWidget {
                           new Text(
                             "\₺${prodRentPrice}",
                             style: TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
+                                color: Colors.green[600],
+                                fontWeight: FontWeight.bold),
                           )
                         ],
                       )),

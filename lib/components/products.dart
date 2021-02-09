@@ -137,7 +137,8 @@ class SingleProd extends StatelessWidget {
                           new Text(
                             "\₺${prodRentPrice}",
                             style: TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
+                                color: Colors.green[700],
+                                fontWeight: FontWeight.bold),
                           )
                         ],
                       )),
