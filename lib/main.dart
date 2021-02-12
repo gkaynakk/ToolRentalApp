@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: new ListView(
+      body: new Column(
         children: <Widget>[
           //image carousel starts here
           image_carousel,
@@ -133,10 +133,8 @@ class _HomePageState extends State<HomePage> {
             child: new Text('Yeni Gelen Ürünler'),
           ),
           //Grid View
-          Container(
-            height: 200.0,
-            child: Products(),
-          ),
+
+          Flexible(child: Products()),
         ],
       ),
     );
