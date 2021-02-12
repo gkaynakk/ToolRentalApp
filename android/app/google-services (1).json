@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1041854311303",
+    "project_id": "avadanlik-212e8",
+    "storage_bucket": "avadanlik-212e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041854311303:android:4d5f43e6c5fb69132a0122",
+        "android_client_info": {
+          "package_name": "com.example.avadanlik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041854311303-nfi9hta0qqa3ephukm4spiol08ncb0sm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.avadanlik",
+            "certificate_hash": "aff35a21bfebbcb2816038860efc29ffb8d49d68"
+          }
+        },
+        {
+          "client_id": "1041854311303-i58kv574rcsoebhc7k9eh87o4akhenet.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyLISBmQ128fiSHkenljjTGtOK4pnJXII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041854311303-i58kv574rcsoebhc7k9eh87o4akhenet.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
