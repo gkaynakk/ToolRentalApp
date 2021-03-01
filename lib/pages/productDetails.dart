@@ -1,4 +1,6 @@
 import 'package:avadanlik/components/products.dart';
+import 'package:avadanlik/pages/homePage.dart';
+import 'package:avadanlik/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:avadanlik/main.dart';
 
