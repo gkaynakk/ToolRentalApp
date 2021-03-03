@@ -14,6 +14,10 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
+
   SharedPreferences preferences;
   bool loading = false;
   bool isLogedin = false;
@@ -21,7 +25,7 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    isSignedIn();
+    //isSignedIn();
   }
 
   void isSignedIn() async {
@@ -45,6 +49,8 @@ class _LoginState extends State<Login> {
     setState(() {
       loading = true;
     });
+    // await googleSignIn.signOut();
+    googleSignIn.disconnect();
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleUser.authentication;
@@ -86,16 +92,137 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: new Text(
-          "Login",
-          style: TextStyle(color: Colors.red.shade900),
-        ),
-      ),
       body: Stack(
         children: <Widget>[
+          Image.asset(
+            'images/back4.jpg',
+            fit: BoxFit.fill,
+            height: double.infinity,
+            width: double.infinity,
+          ),
+          Container(
+            color: Colors.black45.withOpacity(0.4),
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 220.0),
+            child: Center(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.white.withOpacity(0.5),
+                        elevation: 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: TextFormField(
+                            controller: _emailTextController,
+                            decoration: InputDecoration(
+                              hintText: "Email",
+                              icon: Icon(Icons.alternate_email),
+                            ),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                Pattern pattern =
+                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                RegExp regex = new RegExp(pattern);
+                                if (!regex.hasMatch(value))
+                                  return 'Lütfen e-posta adresinizin doğru olduğundan emin olun!';
+                                else
+                                  return null;
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.white.withOpacity(0.5),
+                        elevation: 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: TextFormField(
+                            controller: _passwordTextController,
+                            decoration: InputDecoration(
+                              hintText: "Parola",
+                              icon: Icon(Icons.lock_outline),
+                            ),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Parola alanı boş bırakılamaz!";
+                              } else if (value.length < 6) {
+                                return "Parola en az 6 karakter olmalı!";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.orange.withOpacity(0.8),
+                          elevation: 0.0,
+                          child: MaterialButton(
+                            onPressed: () {},
+                            minWidth: MediaQuery.of(context).size.width,
+                            child: Text(
+                              "Giriş",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0),
+                            ),
+                          )),
+                    ),
+                    Expanded(child: Container()),
+                    Divider(
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "Öbür Giriş Seçenekleri",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.red.withOpacity(0.8),
+                          elevation: 0.0,
+                          child: MaterialButton(
+                            onPressed: () {
+                              handleSignIn();
+                            },
+                            minWidth: MediaQuery.of(context).size.width,
+                            child: Text(
+                              "Google",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0),
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Visibility(
               visible: loading ?? true,
               child: Center(
@@ -109,21 +236,18 @@ class _LoginState extends State<Login> {
               ))
         ],
       ),
-      bottomNavigationBar: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: 12.0, right: 12.0, top: 8.0, bottom: 8.0),
-          child: FlatButton(
-              color: Colors.red,
-              onPressed: () {
-                handleSignIn();
-              },
-              child: Text(
-                "Sign in / Sign up with google",
-                style: TextStyle(color: Colors.white),
-              )),
-        ),
-      ),
     );
   }
 }
+
+//  validator: (value) {
+//                       if (value.isEmpty) {
+//                         Pattern pattern =
+//                             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+//                         RegExp regex = new RegExp(pattern);
+//                         if (!regex.hasMatch(value))
+//                           return 'Lütfen e-posta adresinizin doğru olduğundan emin olun!';
+//                         else
+//                           return null;
+//                       }
+//                     },
