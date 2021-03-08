@@ -7,6 +7,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
+    theme: ThemeData(primaryColor: Colors.orange),
     home: Login(),
   ) //MaterialApp
       );

@@ -140,6 +140,11 @@ flutter:
       - images/back2.jpg
       - images/back3.jpg
       - images/back4.jpg
+      - images/logo.png
+      - images/logo2.png
+      - images/logo3.png
+      - images/logo4.png
+      - images/google.png
     
 
 
