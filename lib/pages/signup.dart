@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:avadanlik/db/users.dart';
+import 'package:avadanlik/pages/homePage.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
 class SignUp extends StatefulWidget {
   @override
@@ -10,15 +12,16 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+  UserServices _userServices = UserServices();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-
   String gender;
-  String groupValue = "erkek";
-
+  String groupvalue = "erkek";
+  bool hidePass = true;
   bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +42,9 @@ class _SignUpState extends State<SignUp> {
               alignment: Alignment.topCenter,
               padding: const EdgeInsets.only(top: 50),
               child: Image.asset(
-                'images/logo.png',
-                width: 200,
-                height: 150,
+                'images/logo5.png',
+                width: 300,
+                height: 200,
               )),
           Center(
             child: Padding(
@@ -62,9 +65,9 @@ class _SignUpState extends State<SignUp> {
                             child: TextFormField(
                               controller: _nameTextController,
                               decoration: InputDecoration(
-                                hintText: "İsminiz",
-                                icon: Icon(Icons.person_outlined),
-                              ),
+                                  hintText: "İsminiz",
+                                  icon: Icon(Icons.person_outlined),
+                                  border: InputBorder.none),
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "İsim Alanı alanı boş bırakılamaz!";
@@ -87,9 +90,9 @@ class _SignUpState extends State<SignUp> {
                             child: TextFormField(
                               controller: _emailTextController,
                               decoration: InputDecoration(
-                                hintText: "Email",
-                                icon: Icon(Icons.alternate_email),
-                              ),
+                                  hintText: "Email",
+                                  icon: Icon(Icons.alternate_email),
+                                  border: InputBorder.none),
                               validator: (value) {
                                 if (value.isEmpty) {
                                   Pattern pattern =
@@ -122,7 +125,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 trailing: Radio(
                                     value: "erkek",
-                                    groupValue: groupValue,
+                                    groupValue: groupvalue,
                                     onChanged: (e) => valueChanged(e)),
                               )),
                               Expanded(
@@ -134,7 +137,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 trailing: Radio(
                                     value: "kadın",
-                                    groupValue: groupValue,
+                                    groupValue: groupvalue,
                                     onChanged: (e) => valueChanged(e)),
                               )),
                             ],
@@ -149,20 +152,30 @@ class _SignUpState extends State<SignUp> {
                           elevation: 0.0,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: TextFormField(
-                              controller: _passwordTextController,
-                              decoration: InputDecoration(
-                                hintText: "Parola",
-                                icon: Icon(Icons.lock_outline),
+                            child: ListTile(
+                              title: TextFormField(
+                                controller: _passwordTextController,
+                                obscureText: hidePass,
+                                decoration: InputDecoration(
+                                    hintText: "Parola",
+                                    icon: Icon(Icons.lock_outline),
+                                    border: InputBorder.none),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Parola alanı boş bırakılamaz!";
+                                  } else if (value.length < 6) {
+                                    return "Parola en az 6 karakter olmalı!";
+                                  }
+                                  return null;
+                                },
                               ),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Parola alanı boş bırakılamaz!";
-                                } else if (value.length < 6) {
-                                  return "Parola en az 6 karakter olmalı!";
-                                }
-                                return null;
-                              },
+                              trailing: IconButton(
+                                  icon: Icon(Icons.remove_red_eye),
+                                  onPressed: () {
+                                    setState(() {
+                                      hidePass = false;
+                                    });
+                                  }),
                             ),
                           ),
                         ),
@@ -175,20 +188,30 @@ class _SignUpState extends State<SignUp> {
                           elevation: 0.0,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: TextFormField(
-                              controller: _confirmPasswordController,
-                              decoration: InputDecoration(
-                                hintText: "Parolayı onayla",
-                                icon: Icon(Icons.lock_outline),
+                            child: ListTile(
+                              title: TextFormField(
+                                controller: _confirmPasswordController,
+                                obscureText: hidePass,
+                                decoration: InputDecoration(
+                                    hintText: "Parolayı onayla",
+                                    icon: Icon(Icons.lock_outline),
+                                    border: InputBorder.none),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Parola alanı boş bırakılamaz!";
+                                  } else if (value.length < 6) {
+                                    return "Parola en az 6 karakter olmalı!";
+                                  }
+                                  return null;
+                                },
                               ),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Parola alanı boş bırakılamaz!";
-                                } else if (value.length < 6) {
-                                  return "Parola en az 6 karakter olmalı!";
-                                }
-                                return null;
-                              },
+                              trailing: IconButton(
+                                  icon: Icon(Icons.remove_red_eye),
+                                  onPressed: () {
+                                    setState(() {
+                                      hidePass = false;
+                                    });
+                                  }),
                             ),
                           ),
                         ),
@@ -200,7 +223,9 @@ class _SignUpState extends State<SignUp> {
                             color: Colors.orange.withOpacity(0.8),
                             elevation: 0.0,
                             child: MaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                validateForm();
+                              },
                               minWidth: MediaQuery.of(context).size.width,
                               child: Text(
                                 "Kaydol",
@@ -306,12 +331,39 @@ class _SignUpState extends State<SignUp> {
   valueChanged(e) {
     setState(() {
       if (e == "erkek") {
-        groupValue = e;
+        groupvalue = e;
+        gender = e;
       } else if (e == "kadın") {
-        groupValue = e;
-      } else if (e == "diğer") {
-        groupValue = e;
+        groupvalue = e;
+        gender = e;
       }
     });
+  }
+
+  Future validateForm() async {
+    FormState formState = _formKey.currentState;
+
+    if (formState.validate()) {
+      formState.reset();
+      final User user = firebaseAuth.currentUser;
+      if (user != null) {
+        firebaseAuth
+            .createUserWithEmailAndPassword(
+                email: _emailTextController.text,
+                password: _passwordTextController.text)
+            .then((user) => {
+                  _userServices.createUser({
+                    "username": _nameTextController.text,
+                    "email": _emailTextController.text,
+                    "userId": user.user.uid,
+                    "gender": gender,
+                  })
+                })
+            .catchError((err) => {print(err.toString())});
+
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
+    }
   }
 }

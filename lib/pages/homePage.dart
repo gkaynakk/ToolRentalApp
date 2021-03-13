@@ -2,9 +2,12 @@
 import 'package:avadanlik/components/HorizantalListView.dart';
 import 'package:avadanlik/components/products.dart';
 import 'package:avadanlik/pages/cart.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+
+import 'login.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -101,10 +104,20 @@ class _HomePageState extends State<HomePage> {
                     title: Text('Ayarlar'),
                     leading: Icon(Icons.settings, color: Colors.grey))),
             InkWell(
-                onTap: () {},
-                child: ListTile(
-                    title: Text('Hakkımızda'),
-                    leading: Icon(Icons.help, color: Colors.grey))),
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Login()));
+                });
+              },
+              child: ListTile(
+                title: Text('Çıkış'),
+                leading: Icon(
+                  Icons.transit_enterexit,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
           ],
         ),
       ),

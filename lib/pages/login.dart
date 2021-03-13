@@ -110,9 +110,9 @@ class _LoginState extends State<Login> {
               alignment: Alignment.topCenter,
               padding: const EdgeInsets.only(top: 50),
               child: Image.asset(
-                'images/logo.png',
-                width: 200,
-                height: 150,
+                'images/logo5.png',
+                width: 300,
+                height: 200,
               )),
           Center(
             child: Padding(
@@ -135,6 +135,7 @@ class _LoginState extends State<Login> {
                               decoration: InputDecoration(
                                 hintText: "Email",
                                 icon: Icon(Icons.alternate_email),
+                                border: InputBorder.none,
                               ),
                               validator: (value) {
                                 if (value.isEmpty) {
@@ -161,9 +162,11 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.only(left: 12.0),
                             child: TextFormField(
                               controller: _passwordTextController,
+                              obscureText: true,
                               decoration: InputDecoration(
                                 hintText: "Parola",
                                 icon: Icon(Icons.lock_outline),
+                                border: InputBorder.none,
                               ),
                               validator: (value) {
                                 if (value.isEmpty) {
