@@ -1,11 +1,12 @@
-import 'package:avadanlik/pages/signup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/homePage.dart';
+import 'package:avadanlik/pages/signup.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -18,10 +19,10 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
-
   SharedPreferences preferences;
   bool loading = false;
   bool isLogedin = false;
+  bool hidePass = true;
 
   @override
   void initState() {
@@ -33,8 +34,17 @@ class _LoginState extends State<Login> {
     setState(() {
       loading = true;
     });
+
+    // await googleSign.signOut();
+    googleSignIn.disconnect();
     preferences = await SharedPreferences.getInstance();
     isLogedin = await googleSignIn.isSignedIn();
+
+    final User user = firebaseAuth.currentUser;
+    if (user != null) {
+      setState(() => isLogedin = true);
+    }
+
     if (isLogedin) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -50,8 +60,7 @@ class _LoginState extends State<Login> {
     setState(() {
       loading = true;
     });
-    // await googleSignIn.signOut();
-    googleSignIn.disconnect();
+
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleUser.authentication;
@@ -92,198 +101,258 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Image.asset(
-            'images/back4.jpg',
-            fit: BoxFit.fill,
-            height: double.infinity,
-            width: double.infinity,
-          ),
-          Container(
-            color: Colors.black45.withOpacity(0.4),
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Container(
-              alignment: Alignment.topCenter,
-              padding: const EdgeInsets.only(top: 50),
-              child: Image.asset(
-                'images/logo5.png',
-                width: 300,
-                height: 200,
-              )),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 220.0),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: Container(
+                  alignment: Alignment.topCenter,
+                  child: Image.asset(
+                    'images/logo5.png',
+                    width: 250.0,
+                    // height: 240.0,
+                  )),
+            ),
+            // Image.asset(
+            //   'images/back.jpeg',
+            //   fit: BoxFit.fill,
+            //   width: double.infinity,
+            //   height: double.infinity,
+            // ),
+            // Container(
+            //   color: Colors.black.withOpacity(0.4),
+            //   width: double.infinity,
+            //   height: double.infinity,
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(top: 150.0),
               child: Center(
                 child: Form(
                   key: _formKey,
-                  child: ListView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(14, 8, 14, 8.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                         child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.white.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey.withOpacity(0.2),
                           elevation: 0.0,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: TextFormField(
-                              controller: _emailTextController,
-                              decoration: InputDecoration(
-                                hintText: "Email",
-                                icon: Icon(Icons.alternate_email),
-                                border: InputBorder.none,
-                              ),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  Pattern pattern =
-                                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                  RegExp regex = new RegExp(pattern);
-                                  if (!regex.hasMatch(value))
-                                    return 'Lütfen e-posta adresinizin doğru olduğundan emin olun!';
-                                  else
-                                    return null;
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(14, 8, 14, 8.0),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.white.withOpacity(0.5),
-                          elevation: 0.0,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: TextFormField(
-                              controller: _passwordTextController,
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                hintText: "Parola",
-                                icon: Icon(Icons.lock_outline),
-                                border: InputBorder.none,
-                              ),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Parola alanı boş bırakılamaz!";
-                                } else if (value.length < 6) {
-                                  return "Parola en az 6 karakter olmalı!";
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(14, 8, 14, 8.0),
-                        child: Material(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Colors.orange.withOpacity(0.8),
-                            elevation: 0.0,
-                            child: MaterialButton(
-                              onPressed: () {},
-                              minWidth: MediaQuery.of(context).size.width,
-                              child: Text(
-                                "Giriş",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.0),
-                              ),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Şifreni mi unuttun?",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUp()));
-                              },
-                              child: Text(
-                                "Kaydol!",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ))),
-//
-                      Expanded(child: Container()),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Öbür Giriş Seçenekleri",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Material(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Colors.red.withOpacity(0.8),
-                            elevation: 0.0,
-                            child: MaterialButton(
-                                onPressed: () {
-                                  handleSignIn();
+                            child: ListTile(
+                              title: TextFormField(
+                                controller: _emailTextController,
+                                decoration: InputDecoration(
+                                    hintText: "Email",
+                                    icon: Icon(Icons.alternate_email),
+                                    border: InputBorder.none),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    Pattern pattern =
+                                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                    RegExp regex = new RegExp(pattern);
+                                    if (!regex.hasMatch(value))
+                                      return 'Lütfen e-posta adresinizin geçerli olduğundan emin olun';
+                                    else
+                                      return null;
+                                  }
                                 },
-                                minWidth: MediaQuery.of(context).size.width,
-                                child: Row(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          110, 4, 4, 4),
-                                      child: Image.asset(
-                                        'images/google.png',
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Google",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.0),
-                                    ),
-                                  ],
-                                )),
+                              ),
+                            ),
                           ),
                         ),
                       ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey.withOpacity(0.2),
+                          elevation: 0.0,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: ListTile(
+                              title: TextFormField(
+                                controller: _passwordTextController,
+                                obscureText: hidePass,
+                                decoration: InputDecoration(
+                                    hintText: "Parola",
+                                    icon: Icon(Icons.lock_outline),
+                                    border: InputBorder.none),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Şifre alanı boş olamaz !";
+                                  } else if (value.length < 6) {
+                                    return "Şifre en az 6 karakter uzunluğunda olmalıdır !";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              trailing: IconButton(
+                                  icon: Icon(Icons.remove_red_eye),
+                                  onPressed: () {
+                                    setState(() {
+                                      hidePass = false;
+                                    });
+                                  }),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.deepOrange.withOpacity(0.8),
+                          elevation: 0.0,
+                          child: MaterialButton(
+                            onPressed: () {},
+                            minWidth: MediaQuery.of(context).size.width,
+                            child: Text(
+                              "Giriş",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Şifremi unuttum",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SignUp()));
+                                  },
+                                  child: Text(
+                                    "Hesap oluştur",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.black),
+                                  ))),
+                        ],
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Divider(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Veya",
+                                style:
+                                    TextStyle(fontSize: 20, color: Colors.grey),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Divider(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                            child: Material(
+                                child: MaterialButton(
+                                    onPressed: () {},
+                                    child: Image.asset(
+                                      "images/facebook.png",
+                                      width: 60,
+                                    ))),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                            child: Material(
+                                child: MaterialButton(
+                                    onPressed: () {
+                                      handleSignIn();
+                                    },
+                                    child: Image.asset(
+                                      "images/google3.png",
+                                      width: 45,
+                                    ))),
+                          ),
+                        ],
+                      ),
+                      // Padding(
+                      //   padding:
+                      //       const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                      //   child: Material(
+                      //     borderRadius: BorderRadius.circular(20.0),
+                      //     color: Colors.deepOrange.withOpacity(0.8),
+                      //     elevation: 0.0,
+                      //     child: MaterialButton(
+                      //       onPressed: () {
+                      //         handleSignIn();
+                      //       },
+                      //       minWidth: MediaQuery.of(context).size.width,
+                      //       child: Row(
+                      //         children: <Widget>[
+                      //           Padding(
+                      //             padding: const EdgeInsets.all(4.0),
+                      //             child: Image.asset(
+                      //               "images/google.png",
+                      //               width: 30.0,
+                      //               height: 30.0,
+                      //             ),
+                      //           ),
+                      //           Text(
+                      //             "Google",
+                      //             textAlign: TextAlign.center,
+                      //             style: TextStyle(
+                      //                 color: Colors.white,
+                      //                 fontWeight: FontWeight.bold,
+                      //                 fontSize: 22.0),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
               ),
             ),
-          ),
-          Visibility(
+            Visibility(
               visible: loading ?? true,
               child: Center(
                 child: Container(
@@ -293,21 +362,11 @@ class _LoginState extends State<Login> {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
                   ),
                 ),
-              ))
-        ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-//  validator: (value) {
-//                       if (value.isEmpty) {
-//                         Pattern pattern =
-//                             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-//                         RegExp regex = new RegExp(pattern);
-//                         if (!regex.hasMatch(value))
-//                           return 'Lütfen e-posta adresinizin doğru olduğundan emin olun!';
-//                         else
-//                           return null;
-//                       }
-//                     },
