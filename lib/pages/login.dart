@@ -262,24 +262,24 @@ class _LoginState extends State<Login> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Divider(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Veya",
-                                style:
-                                    TextStyle(fontSize: 20, color: Colors.grey),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Divider(
-                                color: Colors.black,
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Divider(),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Text(
+                            //     "Veya",
+                            //     style:
+                            //         TextStyle(fontSize: 20, color: Colors.grey),
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Divider(
+                            //     color: Colors.black,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -290,13 +290,19 @@ class _LoginState extends State<Login> {
                           Padding(
                             padding:
                                 const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
-                            child: Material(
-                                child: MaterialButton(
-                                    onPressed: () {},
-                                    child: Image.asset(
-                                      "images/facebook.png",
-                                      width: 60,
-                                    ))),
+                            child: Text(
+                              "Google ile giriş",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.grey),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.deepOrange,
+                              size: 30.0,
+                            ),
                           ),
                           Padding(
                             padding:

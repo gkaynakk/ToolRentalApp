@@ -265,45 +265,51 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Divider(),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Facebook veya Google ile Kaydol",
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.grey),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Divider(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(16.0),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: <Widget>[
+                          //       Padding(
+                          //         padding: const EdgeInsets.all(8.0),
+                          //         child: Divider(),
+                          //       ),
+                          //       Padding(
+                          //         padding: const EdgeInsets.all(8.0),
+                          //         child: Text(
+                          //           "Google ile Kaydol",
+                          //           style: TextStyle(
+                          //               fontSize: 20, color: Colors.grey),
+                          //         ),
+                          //       ),
+                          //       Padding(
+                          //         padding: const EdgeInsets.all(8.0),
+                          //         child: Divider(
+                          //           color: Colors.black,
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     14.0, 8.0, 14.0, 8.0),
-                                child: Material(
-                                    child: MaterialButton(
-                                        onPressed: () {},
-                                        child: Image.asset(
-                                          "images/facebook.png",
-                                          width: 50,
-                                        ))),
+                                child: Text(
+                                  "Google ile kaydol",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.grey),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(1),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.deepOrange,
+                                  size: 30.0,
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
@@ -374,7 +380,7 @@ class _SignUpState extends State<SignUp> {
     if (formState.validate()) {
       formState.reset();
       final User user = firebaseAuth.currentUser;
-      if (user == null) {
+      if (user != null) {
         firebaseAuth
             .createUserWithEmailAndPassword(
                 email: _emailTextController.text,
@@ -384,7 +390,6 @@ class _SignUpState extends State<SignUp> {
                     "username": _nameTextController.text,
                     "email": _emailTextController.text,
                     "userId": user.user.uid,
-                    "gender": gender,
                   })
                 })
             .catchError((err) => {print(err.toString())});
