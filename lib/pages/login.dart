@@ -1,3 +1,4 @@
+import 'package:avadanlik/commons/common.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -209,7 +210,7 @@ class _LoginState extends State<Login> {
                             const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.deepOrange.withOpacity(0.8),
+                          color: deepOrange,
                           elevation: 0.0,
                           child: MaterialButton(
                             onPressed: () {},
@@ -234,7 +235,7 @@ class _LoginState extends State<Login> {
                               "Şifremi unuttum",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: black,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),

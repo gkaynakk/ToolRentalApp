@@ -1,3 +1,5 @@
+import 'package:avadanlik/commons/common.dart';
+import 'package:avadanlik/db/auth.dart';
 import 'package:avadanlik/db/users.dart';
 import 'package:avadanlik/pages/homePage.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ class _SignUpState extends State<SignUp> {
   String groupvalue = "erkek";
   bool hidePass = true;
   bool loading = false;
+  Auth auth = Auth();
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +230,7 @@ class _SignUpState extends State<SignUp> {
                                 const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                             child: Material(
                               borderRadius: BorderRadius.circular(20.0),
-                              color: Colors.deepOrange.withOpacity(0.8),
+                              color: deepOrange,
                               elevation: 0.0,
                               child: MaterialButton(
                                 onPressed: () {
@@ -238,7 +241,7 @@ class _SignUpState extends State<SignUp> {
                                   "Kaydol",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22.0),
                                 ),
@@ -255,7 +258,7 @@ class _SignUpState extends State<SignUp> {
                                 "Zaten üye misiniz?",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: deepOrange,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -307,7 +310,19 @@ class _SignUpState extends State<SignUp> {
                                     14.0, 8.0, 14.0, 8.0),
                                 child: Material(
                                     child: MaterialButton(
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          User user = await auth.googleSignIn();
+                                          if (user != null) {
+                                            _userServices.createUser({
+                                              "name": user.displayName,
+                                              "photo": user.photoURL,
+                                              "email": user.email,
+                                              "userId": user.uid,
+                                            });
+                                            changeScreenReplacement(
+                                                context, HomePage());
+                                          }
+                                        },
                                         child: Image.asset(
                                           "images/google3.png",
                                           width: 40,
