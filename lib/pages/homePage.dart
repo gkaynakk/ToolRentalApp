@@ -1,3 +1,5 @@
+//custom imports
+import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/components/HorizantalListView.dart';
 import 'package:avadanlik/components/products.dart';
 import 'package:avadanlik/pages/cart.dart';
@@ -14,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Widget image_carousel = new Container(
@@ -37,23 +40,31 @@ class _HomePageState extends State<HomePage> {
       ),
     );
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: new AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.deepOrange, Colors.yellow],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
+        iconTheme: IconThemeData(color: deepOrange),
+        elevation: 0.1,
+        backgroundColor: white,
+        title: Material(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.grey[50],
+          elevation: 0.0,
+          child: TextFormField(
+            controller: _searchController,
+            decoration: InputDecoration(
+                hintText: "Ürün girin...", border: InputBorder.none),
+            validator: (value) {
+              if (value.isEmpty) {
+                return "Lütfen arama alanını doldurun.";
+              }
+              return null;
+            },
           ),
         ),
-        title: Text('Avadanlık'),
         actions: <Widget>[
           new IconButton(
-              icon: Icon(Icons.search, color: Colors.white), onPressed: () {}),
+              icon: Icon(Icons.search, color: deepOrange), onPressed: () {}),
           new IconButton(
-              icon: Icon(Icons.shopping_cart, color: Colors.white),
+              icon: Icon(Icons.shopping_cart, color: deepOrange),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => new Cart()));
@@ -117,12 +128,6 @@ class _HomePageState extends State<HomePage> {
                 child: ListTile(
                     title: Text('Ayarlar'),
                     leading: Icon(Icons.settings, color: Colors.grey))),
-            InkWell(
-                onTap: () {},
-                child: ListTile(
-                    title: Text('Hakkımızda'),
-                    leading: Icon(Icons.help, color: Colors.grey))),
-            Divider(),
             InkWell(
               onTap: () {
                 FirebaseAuth.instance.signOut().then((value) {
