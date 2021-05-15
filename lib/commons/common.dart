@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 Color deepOrange = Colors.deepOrange;
+Color orange = Colors.orange;
 Color black = Colors.black;
 Color white = Colors.white;
 
