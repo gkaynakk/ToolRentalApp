@@ -3,10 +3,12 @@ import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/components/HorizantalListView.dart';
 import 'package:avadanlik/components/products.dart';
 import 'package:avadanlik/pages/cart.dart';
+import 'package:avadanlik/provider/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:provider/provider.dart';
 
 import 'login.dart';
 
@@ -19,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
     Widget image_carousel = new Container(
       height: 200.0,
       child: new Carousel(
@@ -130,10 +133,11 @@ class _HomePageState extends State<HomePage> {
                     leading: Icon(Icons.settings, color: Colors.grey))),
             InkWell(
               onTap: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Login()));
-                });
+                user.signOut();
+                // FirebaseAuth.instance.signOut().then((value) {
+                //   Navigator.pushReplacement(context,
+                //       MaterialPageRoute(builder: (context) => Login()));
+                // });
               },
               child: ListTile(
                 title: Text('Çıkış'),
