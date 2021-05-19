@@ -1,8 +1,9 @@
 //custom imports
 import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/components/HorizantalListView.dart';
-import 'package:avadanlik/components/products.dart';
-import 'package:avadanlik/pages/cart.dart';
+import 'package:avadanlik/components/productss.dart';
+import 'package:avadanlik/provider/app_provider.dart';
+import 'package:avadanlik/screens/cart.dart';
 import 'package:avadanlik/provider/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(context);
     final user = Provider.of<UserProvider>(context);
     Widget image_carousel = new Container(
       height: 181.0,
@@ -164,11 +166,15 @@ class _HomePageState extends State<HomePage> {
           //Padding widget
           new Padding(
             padding: const EdgeInsets.all(20.0),
-            child: new Text('Yeni Gelen Ürünler'),
+            child: new Text('Öne Çıkanlar'),
           ),
           //Grid View
 
           Flexible(child: Products()),
+          Text(
+            appProvider.featureProducts.length.toString(),
+            style: TextStyle(color: black),
+          )
         ],
       ),
     );
