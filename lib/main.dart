@@ -1,11 +1,11 @@
-import 'package:avadanlik/pages/homePage.dart';
-import 'package:avadanlik/pages/splash.dart';
+import 'package:avadanlik/screens/homePage.dart';
+import 'package:avadanlik/screens/splash.dart';
 import 'package:flutter/material.dart';
 
 //my own imports
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'pages/login.dart';
+import 'screens/login.dart';
 import 'provider/user_provider.dart';
 
 void main() async {

@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
     Widget image_carousel = new Container(
-      height: 200.0,
+      height: 181.0,
       child: new Carousel(
         boxFit: BoxFit.cover,
         images: [

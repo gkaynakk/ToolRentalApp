@@ -2,7 +2,7 @@ import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/commons/loading.dart';
 import 'package:avadanlik/db/auth.dart';
 import 'package:avadanlik/db/users.dart';
-import 'package:avadanlik/pages/homePage.dart';
+import 'package:avadanlik/screens/homePage.dart';
 import 'package:avadanlik/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -57,7 +57,7 @@ class _SignUpState extends State<SignUp> {
                                     alignment: Alignment.topCenter,
                                     child: Image.asset(
                                       'images/logo.png',
-                                      width: 190.0,
+                                      width: 230.0,
                                       // height: 240.0,
                                     )),
                               ),

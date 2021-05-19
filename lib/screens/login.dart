@@ -8,8 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../pages/homePage.dart';
-import 'package:avadanlik/pages/signup.dart';
+import '../screens/homePage.dart';
+import 'package:avadanlik/screens/signup.dart';
 import '../provider/user_provider.dart';
 
 class Login extends StatefulWidget {
@@ -308,7 +308,7 @@ class _LoginState extends State<Login> {
                                   padding: const EdgeInsets.fromLTRB(
                                       14.0, 8.0, 14.0, 8.0),
                                   child: Text(
-                                    "Google ile giriş",
+                                    "Google ile giriş yap",
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.grey),
                                   ),
