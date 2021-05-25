@@ -2,9 +2,12 @@
 import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/components/HorizantalListView.dart';
 import 'package:avadanlik/components/productss.dart';
+import 'package:avadanlik/models/product.dart';
 import 'package:avadanlik/provider/app_provider.dart';
+import 'package:avadanlik/provider/product_provider.dart';
 import 'package:avadanlik/screens/cart.dart';
 import 'package:avadanlik/provider/user_provider.dart';
+import 'package:avadanlik/widgets/product_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -22,7 +25,8 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    AppProvider appProvider = Provider.of<AppProvider>(context);
+    // AppProvider appProvider = Provider.of<AppProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
     final user = Provider.of<UserProvider>(context);
     Widget image_carousel = new Container(
       height: 181.0,
@@ -169,12 +173,16 @@ class _HomePageState extends State<HomePage> {
             child: new Text('Öne Çıkanlar'),
           ),
           //Grid View
-
-          Flexible(child: Products()),
-          Text(
-            appProvider.featureProducts.length.toString(),
-            style: TextStyle(color: black),
+          Column(
+            children: productProvider.products
+                .map((item) => GestureDetector(
+                      child: ProductCard(
+                        product: item,
+                      ),
+                    ))
+                .toList(),
           )
+          //  Flexible(child: Products()),
         ],
       ),
     );

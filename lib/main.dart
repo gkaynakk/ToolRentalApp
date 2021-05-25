@@ -1,4 +1,5 @@
 import 'package:avadanlik/provider/app_provider.dart';
+import 'package:avadanlik/provider/product_provider.dart';
 import 'package:avadanlik/screens/homePage.dart';
 import 'package:avadanlik/screens/splash.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ void main() async {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: UserProvider.initialize()),
-        ChangeNotifierProvider.value(value: AppProvider())
+        ChangeNotifierProvider.value(value: ProductProvider.initialize()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

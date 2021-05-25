@@ -1,7 +1,7 @@
 import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/commons/loading.dart';
-import 'package:avadanlik/db/auth.dart';
-import 'package:avadanlik/db/users.dart';
+import 'package:avadanlik/service/auth.dart';
+import 'package:avadanlik/service/users.dart';
 import 'package:avadanlik/screens/homePage.dart';
 import 'package:avadanlik/provider/user_provider.dart';
 import 'package:flutter/material.dart';

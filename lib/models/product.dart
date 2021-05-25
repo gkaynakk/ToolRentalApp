@@ -26,12 +26,12 @@ class Product {
   String _name;
   String _picture;
   //double _price;
-  double _rent;
-  int _quantity;
+  num _rent;
+  //int _quantity;
   // List<String> _colors;
   // List<String> _size;
   bool _featured;
-  double _sale;
+  num _sale;
 
   //  getters
   String get brand => _brand;
@@ -41,12 +41,12 @@ class Product {
   String get name => _name;
   String get picture => _picture;
   //double get price => _price;
-  double get rent => _rent;
-  int get quantity => _quantity;
+  num get rent => _rent;
+  // int get quantity => _quantity;
   // List<String> get colors => _colors;
   // List<String> get size => _size;
   bool get featured => _featured;
-  double get sale => _sale;
+  num get sale => _sale;
 
   Product.fromSnapshot(DocumentSnapshot snapshot) {
     _id = snapshot.data()[ID];
