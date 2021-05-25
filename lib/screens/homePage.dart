@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: new Column(
+      body: new ListView(
         children: <Widget>[
           //image carousel starts here
           image_carousel,
