@@ -1,5 +1,6 @@
 import 'package:avadanlik/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/product.dart';
 
 class ProductServices {
   String collection = "products";

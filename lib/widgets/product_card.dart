@@ -63,25 +63,28 @@ class ProductCard extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                    text: '${product.name} \n',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  TextSpan(
-                    text: 'Üretici: ${product.brand} \n\n\n\n',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                  TextSpan(
-                    text: '\₺${product.rent} \t',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  // TextSpan(
-                  //   text: '\₺${product.sale} \t',
-                  //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  // ),
-                ], style: TextStyle(color: Colors.black)),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: '${product.name} \n',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    TextSpan(
+                      text: 'Üretici: ${product.brand} \n\n\n\n',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
+                    TextSpan(
+                      text: '\₺${product.rent} \t',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    // TextSpan(
+                    //   text: '\₺${product.sale} \t',
+                    //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    // ),
+                  ], style: TextStyle(color: Colors.black)),
+                ),
               )
             ],
           ),

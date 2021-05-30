@@ -18,6 +18,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: UserProvider.initialize()),
         ChangeNotifierProvider.value(value: ProductProvider.initialize()),
+        ChangeNotifierProvider.value(value: AppProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

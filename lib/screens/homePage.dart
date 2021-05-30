@@ -13,7 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:provider/provider.dart';
-
+import '../widgets/featured_products.dart';
 import 'login.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // AppProvider appProvider = Provider.of<AppProvider>(context);
     final productProvider = Provider.of<ProductProvider>(context);
+    final appProvider = Provider.of<AppProvider>(context);
     final user = Provider.of<UserProvider>(context);
     Widget image_carousel = new Container(
       height: 181.0,
@@ -163,16 +164,37 @@ class _HomePageState extends State<HomePage> {
           //Padding Widget
           new Padding(
             padding: const EdgeInsets.all(2.0),
-            child: new Text('Kategoriler'),
+            child: new Text(
+              'Kategoriler',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 1
+                  ..color = Colors.orange[700],
+              ),
+            ),
             //Horizantal list view starts here
           ),
           HorizantalList(),
           //Padding widget
           new Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: new Text('Öne Çıkanlar'),
+            padding: const EdgeInsets.all(10.0),
+            child: new Text(
+              'Kiralık Aletler',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 28,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 1
+                  ..color = Colors.orange[700],
+              ),
+            ),
           ),
-          //Grid View
+          // FeaturedProducts(),
+
           Column(
             children: productProvider.products
                 .map((item) => GestureDetector(
