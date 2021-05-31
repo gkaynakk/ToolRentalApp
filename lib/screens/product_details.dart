@@ -360,6 +360,7 @@
 import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/commons/loading.dart';
 import 'package:avadanlik/models/product.dart';
+import 'package:avadanlik/provider/app_provider.dart';
 import 'package:avadanlik/provider/product_provider.dart';
 import 'package:avadanlik/provider/user_provider.dart';
 import 'package:avadanlik/widgets/custom_text.dart';
@@ -400,7 +401,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    final appProvider = Provider.of<ProductProvider>(context);
+    final appProvider = Provider.of<AppProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
 
     return Scaffold(
       key: _key,
@@ -484,20 +486,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              widget.product.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 20),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                widget.product.name,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 20),
+                              ),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              '\$${widget.product.rent}',
+                              '\₺${widget.product.rent}',
                               textAlign: TextAlign.end,
                               style: TextStyle(
                                   color: Colors.white,
@@ -508,55 +512,59 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                     )),
-                // Positioned(
-                //   right: 0,
-                //   child: Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: InkWell(
-                //       onTap: () {
-                //         changeScreen(context, CartScreen());
-                //       },
-                //       child: Padding(
-                //           padding: const EdgeInsets.all(4),
-                //           child: Card(
-                //             elevation: 10,
-                //             shape: RoundedRectangleBorder(
-                //                 borderRadius: BorderRadius.circular(20)),
-                //             child: Padding(
-                //               padding: const EdgeInsets.all(8.0),
-                //               child: Icon(Icons.shopping_cart),
-                //             ),
-                //           )),
-                //     ),
-                //   ),
-                // ),
-                // Positioned(
-                //   top: 120,
-                //   child: Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: InkWell(
-                //       onTap: () {
-                //         print("CLICKED");
-                //         Navigator.pop(context);
-                //       },
-                //       child: Container(
-                //         decoration: BoxDecoration(
-                //             color: red,
-                //             borderRadius: BorderRadius.only(
-                //                 bottomRight: Radius.circular(35))),
-                //         child: Padding(
-                //             padding: const EdgeInsets.all(4.0),
-                //             child: Padding(
-                //               padding: const EdgeInsets.all(12),
-                //               child: Icon(
-                //                 Icons.close,
-                //                 color: Colors.white,
-                //               ),
-                //             )),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                Positioned(
+                  right: 0,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () {
+                        // changeScreen(context, CartScreen());
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Card(
+                            elevation: 10,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.shopping_cart,
+                                color: Colors.deepOrange,
+                              ),
+                            ),
+                          )),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () {
+                        print("CLICKED");
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.deepOrange,
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(35))),
+                        child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             Expanded(
@@ -578,13 +586,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                       padding: const EdgeInsets.all(0),
                       child: Row(
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: CustomText(
-                              text: "Select a Color",
-                              color: white,
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                          //   child: CustomText(
+                          //     text: "Select a Color",
+                          //     color: white,
+                          //   ),
+                          // ),
                           // Padding(
                           //   padding: const EdgeInsets.symmetric(horizontal: 8),
                           //   child: DropdownButton<String>(
@@ -608,87 +616,86 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: CustomText(
-                              text: "Select a Size",
-                              color: white,
-                            ),
-                          ),
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(horizontal: 8),
-                          //   child: DropdownButton<String>(
-                          //       value: _size,
-                          //       style: TextStyle(color: white),
-                          //       items: widget.product.sizes
-                          //           .map<DropdownMenuItem<String>>(
-                          //               (value) => DropdownMenuItem(
-                          //                   value: value,
-                          //                   child: CustomText(
-                          //                     text: value,
-                          //                     color: Colors.red,
-                          //                   )))
-                          //           .toList(),
-                          //       onChanged: (value) {
-                          //         setState(() {
-                          //           _size = value;
-                          //         });
-                          //       }),
-                          // )
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(0),
+                    //   child: Row(
+                    //     children: <Widget>[
+                    //       Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //         child: CustomText(
+                    //           text: "Select a Size",
+                    //           color: white,
+                    //         ),
+                    //       ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //   child: DropdownButton<String>(
+                    //       value: _size,
+                    //       style: TextStyle(color: white),
+                    //       items: widget.product.sizes
+                    //           .map<DropdownMenuItem<String>>(
+                    //               (value) => DropdownMenuItem(
+                    //                   value: value,
+                    //                   child: CustomText(
+                    //                     text: value,
+                    //                     color: Colors.red,
+                    //                   )))
+                    //           .toList(),
+                    //       onChanged: (value) {
+                    //         setState(() {
+                    //           _size = value;
+                    //         });
+                    //       }),
+                    // )
+                    //     ],
+                    //   ),
+                    // ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            'Description:\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s  Lorem Ipsum has been the industry standard dummy text ever since the 1500s ',
+                        child: Text("${widget.product.description}",
                             style: TextStyle(color: Colors.white)),
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(9),
-                    //   child: Material(
-                    //       borderRadius: BorderRadius.circular(15.0),
-                    //       color: Colors.white,
-                    //       elevation: 0.0,
-                    //       child: MaterialButton(
-                    //         onPressed: () async {
-                    //           appProvider.changeIsLoading();
-                    //           bool success = await userProvider.addToCart(
-                    //               product: widget.product,
-                    //               color: _color,
-                    //               size: _size);
-                    //           if (success) {
-                    //             _key.currentState.showSnackBar(
-                    //                 SnackBar(content: Text("Added to Cart!")));
-                    //             userProvider.reloadUserModel();
-                    //             appProvider.changeIsLoading();
-                    //             return;
-                    //           } else {
-                    //             _key.currentState.showSnackBar(SnackBar(
-                    //                 content: Text("Not added to Cart!")));
-                    //             appProvider.changeIsLoading();
-                    //             return;
-                    //           }
-                    //         },
-                    //         minWidth: MediaQuery.of(context).size.width,
-                    //         child: appProvider.isLoading
-                    //             ? Loading()
-                    //             : Text(
-                    //                 "Add to cart",
-                    //                 textAlign: TextAlign.center,
-                    //                 style: TextStyle(
-                    //                     color: Colors.black,
-                    //                     fontWeight: FontWeight.bold,
-                    //                     fontSize: 20.0),
-                    //               ),
-                    //       )),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(9),
+                      child: Material(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: Colors.white,
+                          elevation: 0.0,
+                          child: MaterialButton(
+                            onPressed: () async {
+                              // appProvider.changeIsLoading();
+                              // bool success = await userProvider.addToCart(
+                              //     product: widget.product,
+                              //     color: _color,
+                              //     size: _size);
+                              // if (success) {
+                              //   _key.currentState.showSnackBar(
+                              //       SnackBar(content: Text("Added to Cart!")));
+                              //   userProvider.reloadUserModel();
+                              //   appProvider.changeIsLoading();
+                              //   return;
+                              // } else {
+                              //   _key.currentState.showSnackBar(SnackBar(
+                              //       content: Text("Not added to Cart!")));
+                              //   appProvider.changeIsLoading();
+                              //   return;
+                              // }
+                            },
+                            minWidth: MediaQuery.of(context).size.width,
+                            child: appProvider.isLoading
+                                ? Loading()
+                                : Text(
+                                    "Sepete Ekle",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.deepOrange,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0),
+                                  ),
+                          )),
+                    ),
                     SizedBox(
                       height: 20,
                     )

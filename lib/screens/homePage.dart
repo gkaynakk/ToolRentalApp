@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                 foreground: Paint()
                   ..style = PaintingStyle.stroke
                   ..strokeWidth = 1
-                  ..color = Colors.orange[700],
+                  ..color = Colors.black,
               ),
             ),
             //Horizantal list view starts here
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                 foreground: Paint()
                   ..style = PaintingStyle.stroke
                   ..strokeWidth = 1
-                  ..color = Colors.orange[700],
+                  ..color = Colors.black,
               ),
             ),
           ),
