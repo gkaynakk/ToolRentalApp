@@ -1,20 +1,17 @@
 //custom imports
 import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/components/HorizantalListView.dart';
-import 'package:avadanlik/components/productss.dart';
-import 'package:avadanlik/models/product.dart';
+
 import 'package:avadanlik/provider/app_provider.dart';
 import 'package:avadanlik/provider/product_provider.dart';
-import 'package:avadanlik/screens/cart.dart';
+
 import 'package:avadanlik/provider/user_provider.dart';
 import 'package:avadanlik/widgets/product_card.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
+import '../screens/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:provider/provider.dart';
-import '../widgets/featured_products.dart';
-import 'login.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -77,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.shopping_cart, color: deepOrange),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => new Cart()));
+                    MaterialPageRoute(builder: (context) => new CartScreen()));
               })
         ],
       ),
@@ -121,8 +118,10 @@ class _HomePageState extends State<HomePage> {
                     leading: Icon(Icons.shopping_basket, color: Colors.grey))),
             InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => new Cart()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new CartScreen()));
                 },
                 child: ListTile(
                     title: Text('Sepetim'),

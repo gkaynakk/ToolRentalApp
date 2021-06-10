@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 //my own imports
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+
 import 'screens/login.dart';
 import 'provider/user_provider.dart';
 import 'provider/app_provider.dart';
@@ -14,6 +15,7 @@ import 'provider/app_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: UserProvider.initialize()),

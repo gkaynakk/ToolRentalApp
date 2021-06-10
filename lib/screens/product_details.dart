@@ -357,21 +357,16 @@
 //   }
 // }
 //-----------------------------------------------------------------------------------------------------------------------
+
 import 'package:avadanlik/commons/common.dart';
 import 'package:avadanlik/commons/loading.dart';
+
 import 'package:avadanlik/models/product.dart';
 import 'package:avadanlik/provider/app_provider.dart';
-import 'package:avadanlik/provider/product_provider.dart';
+
 import 'package:avadanlik/provider/user_provider.dart';
-import 'package:avadanlik/widgets/custom_text.dart';
-// import 'package:chat_app/helpers/common.dart';
-// import 'package:chat_app/helpers/style.dart';
-// import 'package:chat_app/models/product.dart';
-// import 'package:chat_app/provider/app.dart';
-// import 'package:chat_app/provider/user.dart';
-// import 'package:chat_app/screens/cart.dart';
-// import 'package:chat_app/widgets/custom_text.dart';
-// import 'package:chat_app/widgets/loading.dart';
+import 'package:avadanlik/screens/cart.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -387,8 +382,8 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   final _key = GlobalKey<ScaffoldState>();
-  String _color = "";
-  String _size = "";
+  // String _color = "";
+  // String _size = "";
 
   @override
   void initState() {
@@ -402,7 +397,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final appProvider = Provider.of<AppProvider>(context);
-    final productProvider = Provider.of<ProductProvider>(context);
 
     return Scaffold(
       key: _key,
@@ -518,7 +512,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                       onTap: () {
-                        // changeScreen(context, CartScreen());
+                        changeScreen(context, CartScreen());
                       },
                       child: Padding(
                           padding: const EdgeInsets.all(4),
@@ -582,40 +576,40 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ]),
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Row(
-                        children: <Widget>[
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(horizontal: 8),
-                          //   child: CustomText(
-                          //     text: "Select a Color",
-                          //     color: white,
-                          //   ),
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(horizontal: 8),
-                          //   child: DropdownButton<String>(
-                          //       value: _color,
-                          //       style: TextStyle(color: white),
-                          //       items: widget.product.colors
-                          //           .map<DropdownMenuItem<String>>(
-                          //               (value) => DropdownMenuItem(
-                          //                   value: value,
-                          //                   child: CustomText(
-                          //                     text: value,
-                          //                     color: Colors.red,
-                          //                   )))
-                          //           .toList(),
-                          //       onChanged: (value) {
-                          //         setState(() {
-                          //           _color = value;
-                          //         });
-                          //       }),
-                          // )
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(0),
+                    //   child: Row(
+                    //     children: <Widget>[
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //   child: CustomText(
+                    //     text: "Select a Color",
+                    //     color: white,
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //   child: DropdownButton<String>(
+                    //       value: _color,
+                    //       style: TextStyle(color: white),
+                    //       items: widget.product.colors
+                    //           .map<DropdownMenuItem<String>>(
+                    //               (value) => DropdownMenuItem(
+                    //                   value: value,
+                    //                   child: CustomText(
+                    //                     text: value,
+                    //                     color: Colors.red,
+                    //                   )))
+                    //           .toList(),
+                    //       onChanged: (value) {
+                    //         setState(() {
+                    //           _color = value;
+                    //         });
+                    //       }),
+                    // )
+                    // ],
+                    //   // ),
+                    // ),
                     // Padding(
                     //   padding: const EdgeInsets.all(0),
                     //   child: Row(
@@ -665,23 +659,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                           elevation: 0.0,
                           child: MaterialButton(
                             onPressed: () async {
-                              // appProvider.changeIsLoading();
-                              // bool success = await userProvider.addToCart(
-                              //     product: widget.product,
-                              //     color: _color,
-                              //     size: _size);
-                              // if (success) {
-                              //   _key.currentState.showSnackBar(
-                              //       SnackBar(content: Text("Added to Cart!")));
-                              //   userProvider.reloadUserModel();
-                              //   appProvider.changeIsLoading();
-                              //   return;
-                              // } else {
-                              //   _key.currentState.showSnackBar(SnackBar(
-                              //       content: Text("Not added to Cart!")));
-                              //   appProvider.changeIsLoading();
-                              //   return;
-                              // }
+                              appProvider.changeIsLoading();
+                              bool success = await userProvider.addToCart(
+                                product: widget.product,
+                              );
+
+                              if (success) {
+                                _key.currentState.showSnackBar(
+                                    SnackBar(content: Text("Sepete eklendi!")));
+                                userProvider.reloadUserModel();
+                                appProvider.changeIsLoading();
+                                return;
+                              } else {
+                                _key.currentState.showSnackBar(SnackBar(
+                                    content: Text("Sepete eklenemedi!")));
+                                appProvider.changeIsLoading();
+                                return;
+                              }
                             },
                             minWidth: MediaQuery.of(context).size.width,
                             child: appProvider.isLoading

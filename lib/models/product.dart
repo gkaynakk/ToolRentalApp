@@ -1,3 +1,4 @@
+import 'package:avadanlik/models/cart_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
@@ -36,7 +37,7 @@ class Product {
   // List<String> _size;
   bool _featured;
   num _sale;
-
+  // num _availabledays;
   //  getters
   String get brand => _brand;
   String get imageUrl => _imageUrl;
@@ -45,8 +46,10 @@ class Product {
   String get id => _id;
   String get name => _name;
   String get picture => _picture;
+  // num get availabledays => _availabledays;
   //double get price => _price;
   num get rent => _rent;
+
   // int get quantity => _quantity;
   // List<String> get colors => _colors;
   // List<String> get size => _size;
@@ -55,6 +58,7 @@ class Product {
 
   Product.fromSnapshot(DocumentSnapshot snapshot) {
     _id = snapshot.data()[ID];
+    // _availabledays = snapshot.data()[AVAILABLEDAYS];
     _brand = snapshot.data()[BRAND];
     _sale = snapshot.data()[SALE];
     _description = snapshot.data()[DESCRIPTION] ?? " ";
