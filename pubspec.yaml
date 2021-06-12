@@ -34,6 +34,7 @@ dependencies:
   transparent_image: ^2.0.0
   auto_size_text: ^2.1.0
   uuid: ^3.0.4
+  flutter_typeahead: 
   firebase_database:
   #cloud_firestore: ^0.8.2+3
   #firebase_auth: ^0.6.6

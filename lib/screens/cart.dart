@@ -285,7 +285,7 @@ class _CartScreenState extends State<CartScreen> {
                                             _orderServices.createOrder(
                                                 userId: userProvider.user.uid,
                                                 id: id,
-                                                description: "Tanım",
+                                                description: "Sipariş Tarihi",
                                                 status: "tamamlandı",
                                                 totalPrice: userProvider
                                                     .userModel.totalCartPrice,
@@ -303,7 +303,7 @@ class _CartScreenState extends State<CartScreen> {
                                                 _key.currentState.showSnackBar(
                                                     SnackBar(
                                                         content: Text(
-                                                            "Sepetten kaldırıldı!")));
+                                                            "Ürünler Sepetten kaldırıldı!")));
                                               } else {
                                                 print("ÜRÜN KALDIRILMADI!");
                                               }

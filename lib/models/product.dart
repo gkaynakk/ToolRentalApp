@@ -32,6 +32,7 @@ class Product {
   String _picture;
   //double _price;
   num _rent;
+
   //int _quantity;
   // List<String> _colors;
   // List<String> _size;

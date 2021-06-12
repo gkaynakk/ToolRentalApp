@@ -245,17 +245,17 @@ class _LoginState extends State<Login> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Şifremi unuttum",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     "Şifremi unuttum",
+                                //     textAlign: TextAlign.center,
+                                //     style: TextStyle(
+                                //       color: black,
+                                //       fontWeight: FontWeight.w400,
+                                //     ),
+                                //   ),
+                                // ),
                                 Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: InkWell(

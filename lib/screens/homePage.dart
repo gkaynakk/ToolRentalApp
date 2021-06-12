@@ -1,17 +1,28 @@
 //custom imports
 import 'package:avadanlik/commons/common.dart';
+import 'package:avadanlik/commons/loading.dart';
 import 'package:avadanlik/components/HorizantalListView.dart';
 
 import 'package:avadanlik/provider/app_provider.dart';
 import 'package:avadanlik/provider/product_provider.dart';
 
 import 'package:avadanlik/provider/user_provider.dart';
+import 'package:avadanlik/screens/order.dart';
+import 'package:avadanlik/screens/product_search.dart';
+import 'package:avadanlik/screens/text_tile_page.dart';
+import 'package:avadanlik/service/products.dart';
+import 'package:avadanlik/widgets/custom_text.dart';
 import 'package:avadanlik/widgets/product_card.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../screens/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:provider/provider.dart';
+import '../provider/category.dart';
+import '../screens/category.dart';
+import '../widgets/categories.dart';
+import "../models/category.dart";
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,8 +35,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // AppProvider appProvider = Provider.of<AppProvider>(context);
     final productProvider = Provider.of<ProductProvider>(context);
+    ProductServices _productServices = ProductServices();
     final appProvider = Provider.of<AppProvider>(context);
     final user = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
+    final categoryProvider = Provider.of<CategoryProvider>(context);
+    final _key = GlobalKey<ScaffoldState>();
     Widget image_carousel = new Container(
       height: 181.0,
       child: new Carousel(
@@ -55,21 +70,30 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.grey[50],
           elevation: 0.0,
-          child: TextFormField(
-            controller: _searchController,
-            decoration: InputDecoration(
-                hintText: "Ürün girin...", border: InputBorder.none),
-            validator: (value) {
-              if (value.isEmpty) {
-                return "Lütfen arama alanını doldurun.";
-              }
-              return null;
-            },
+          child: Container(
+            child: ListTile(
+              title: TextField(
+                textInputAction: TextInputAction.search,
+                onSubmitted: (pattern) async {
+                  await productProvider.search(productName: pattern);
+                  changeScreen(context, ProductSearchScreen());
+                },
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.deepOrange,
+                  ),
+                  hintText: 'Arama... ',
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                ),
+              ),
+            ),
           ),
         ),
         actions: <Widget>[
-          new IconButton(
-              icon: Icon(Icons.search, color: deepOrange), onPressed: () {}),
+          // new IconButton(
+          //     icon: Icon(Icons.search, color: deepOrange), onPressed: () {}),
           new IconButton(
               icon: Icon(Icons.shopping_cart, color: deepOrange),
               onPressed: () {
@@ -82,17 +106,6 @@ class _HomePageState extends State<HomePage> {
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-              accountName: Text('Admin'),
-              accountEmail: Text('avadanlik@gmail.com'),
-              currentAccountPicture: GestureDetector(
-                child: new CircleAvatar(
-                  backgroundColor: Colors.grey[400],
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
               decoration: new BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.deepOrange, Colors.yellow],
@@ -100,19 +113,38 @@ class _HomePageState extends State<HomePage> {
                   end: Alignment.centerRight,
                 ),
               ),
+              accountName: CustomText(
+                text: userProvider.userModel?.name ?? "username lading...",
+                color: white,
+                weight: FontWeight.bold,
+                size: 18,
+              ),
+              accountEmail: CustomText(
+                text: userProvider.userModel?.email ?? "email loading...",
+                color: white,
+              ),
             ),
             InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => new HomePage()));
+                },
                 child: ListTile(
                     title: Text('Ana Sayfa'),
                     leading: Icon(Icons.home, color: Colors.grey))),
+            // InkWell(
+            //     onTap: () {
+            //       _key.currentState.showSnackBar(
+            //           SnackBar(content: Text("Kullanıcı Profili")));
+            //     },
+            //     child: ListTile(
+            //         title: Text('Hesabım'),
+            //         leading: Icon(Icons.person, color: Colors.grey))),
             InkWell(
-                onTap: () {},
-                child: ListTile(
-                    title: Text('Hesabım'),
-                    leading: Icon(Icons.person, color: Colors.grey))),
-            InkWell(
-                onTap: () {},
+                onTap: () async {
+                  await userProvider.getOrders();
+                  changeScreen(context, OrdersScreen());
+                },
                 child: ListTile(
                     title: Text('Kiraladıklarım'),
                     leading: Icon(Icons.shopping_basket, color: Colors.grey))),
@@ -127,16 +159,18 @@ class _HomePageState extends State<HomePage> {
                     title: Text('Sepetim'),
                     leading: Icon(Icons.shopping_cart, color: Colors.grey))),
             InkWell(
-                onTap: () {},
+                onTap: () {
+                  changeScreen(context, InfoPage());
+                },
                 child: ListTile(
-                    title: Text('Beğendiklerim'),
-                    leading: Icon(Icons.favorite, color: Colors.grey))),
+                    title: Text('Bilgilendirme'),
+                    leading: Icon(Icons.info, color: Colors.grey))),
             Divider(color: Colors.black),
-            InkWell(
-                onTap: () {},
-                child: ListTile(
-                    title: Text('Ayarlar'),
-                    leading: Icon(Icons.settings, color: Colors.grey))),
+            // InkWell(
+            //     onTap: () {},
+            //     child: ListTile(
+            //         title: Text('Ayarlar'),
+            //         leading: Icon(Icons.settings, color: Colors.grey))),
             InkWell(
               onTap: () {
                 user.signOut();
@@ -176,7 +210,44 @@ class _HomePageState extends State<HomePage> {
             ),
             //Horizantal list view starts here
           ),
-          HorizantalList(),
+          // HorizantalList(),
+          Divider(),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Container(
+              height: 100,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categoryProvider.categories.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () async {
+//                              app.changeLoading();
+                        await productProvider.loadProductsByCategory(
+                            categoryName:
+                                categoryProvider.categories[index].name);
+
+                        changeScreen(
+                            context,
+                            CategoryScreen(
+                              categoryModel: categoryProvider.categories[index],
+                            ));
+
+//                              app.changeLoading();
+                      },
+                      child: CategoryWidget(
+                        category: categoryProvider.categories[index],
+                      ),
+                    );
+                  }),
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
           //Padding widget
           new Padding(
             padding: const EdgeInsets.all(10.0),
@@ -204,6 +275,76 @@ class _HomePageState extends State<HomePage> {
                 .toList(),
           )
           //  Flexible(child: Products()),
+        ],
+      ),
+    );
+  }
+}
+
+class CategoryWidget extends StatelessWidget {
+  final CategoryModel category;
+
+  const CategoryWidget({Key key, this.category}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(6),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: 140,
+            height: 160,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned.fill(
+                        child: Align(
+                      alignment: Alignment.center,
+                      // child: Loading(),
+                    )),
+                    Center(
+                      child: FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: category.image),
+                    )
+                  ],
+                )),
+          ),
+          Container(
+            width: 140,
+            height: 160,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.6),
+                    Colors.black.withOpacity(0.6),
+                    Colors.black.withOpacity(0.6),
+                    Colors.black.withOpacity(0.4),
+                    Colors.black.withOpacity(0.1),
+                    Colors.black.withOpacity(0.05),
+                    Colors.black.withOpacity(0.025),
+                  ],
+                )),
+          ),
+          Positioned.fill(
+              child: Align(
+                  alignment: Alignment.center,
+                  child: CustomText(
+                    text: category.name,
+                    color: Colors.white,
+                    size: 26,
+                    weight: FontWeight.w300,
+                  )))
         ],
       ),
     );

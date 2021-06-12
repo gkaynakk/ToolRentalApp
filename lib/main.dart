@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'screens/login.dart';
 import 'provider/user_provider.dart';
 import 'provider/app_provider.dart';
+import 'package:avadanlik/provider/category.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: UserProvider.initialize()),
         ChangeNotifierProvider.value(value: ProductProvider.initialize()),
+        ChangeNotifierProvider.value(value: CategoryProvider.initialize()),
         ChangeNotifierProvider.value(value: AppProvider()),
       ],
       child: MaterialApp(

@@ -1,4 +1,5 @@
 import 'package:avadanlik/models/cart_item.dart';
+import 'package:avadanlik/models/order.dart';
 import 'package:avadanlik/models/product.dart';
 import 'package:avadanlik/models/user.dart';
 import 'package:avadanlik/service/orders.dart';
@@ -20,6 +21,7 @@ class UserProvider with ChangeNotifier {
 
   Status get status => _status;
   User get user => _user;
+  List<OrderModel> orders = [];
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   UserServices _userServices = UserServices();
   OrderServices _orderServices = OrderServices();
@@ -112,11 +114,6 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<void> reloadUserModel() async {
-    _userModel = await _userServices.getUserById(user.uid);
-    notifyListeners();
-  }
-
   Future<bool> removeFromCart({CartItemModel cartItem}) async {
     print("ÜRÜN: ${cartItem.toString()}");
 
@@ -130,7 +127,12 @@ class UserProvider with ChangeNotifier {
   }
 
   getOrders() async {
-    var orders = await _orderServices.getUserOrders(userId: _user.uid);
+    orders = await _orderServices.getUserOrders(userId: _user.uid);
+    notifyListeners();
+  }
+
+  Future<void> reloadUserModel() async {
+    _userModel = await _userServices.getUserById(user.uid);
     notifyListeners();
   }
 }
